@@ -1,23 +1,24 @@
-#include <iostream>
-#include <string>
+
+#include<iostream>
+#include<algorithm>
 using namespace std;
 
+// Function to print all sub strings
+void subString(string s, int n)
+{
+    // Pick starting point in outer loop
+    // and lengths of different strings for
+    // a given starting point
+    for (int i = 0; i < n; i++)
+        for (int len = 1; len <= n - i; len++)
+            cout << s.substr(i, len) << endl;
+}
 
-
-int main() {
-
-    string n="";
-    cin>>n;
-    int m = n.length();
-    cout<<m<<"\n";
-    char arr[m+1];
-    for(int i=0;i<m;i++)
-    {
-        arr[i]=n[i];
-    }
-    for(int i=0;i<m;i++){
-        cout<<arr[i]<<i<<" ";
-        cout<"\n";
-    }
-
+// Driver program to test above function
+int main()
+{
+    string s = "";
+    cin>>s;
+    subString(s,s.length());
+    return 0;
 }

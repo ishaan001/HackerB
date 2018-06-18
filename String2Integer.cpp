@@ -10,13 +10,16 @@ int finalValue(string string1) {
 
     if (string1[i] != '\0') {
 
-        if (string1[i]<'0' || string1[i]>'9') {
-           ;
+        if (string1[i]<'A' || string1[i]>'z') {
+
         }
 
         else {
-            num *= 10;
+
             num += string1[i] - '0';
+
+            //don't bother using a 'for' loop because recursion is already sort-of a for loop
+
             finalValue(&string1[i+1]);
         }
     }
