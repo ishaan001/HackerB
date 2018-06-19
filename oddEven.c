@@ -1,38 +1,31 @@
-#include <stdio.h>
+ #include <stdio.h>
+#include <string.h>
 
+int num = 0;
 
-/* Function declaration */
-void printEvenOdd(int cur, int limit);
+int finalValue(char *string1) {
 
+    int i = 0;
 
+    if (string1[i] != '\0') {
 
-int main()
-{
-    int lowerLimit, upperLimit;
+        if (string1[i]<'0' || string1[i]>'9') {
+            printf("Sorry, we can't convert this to an integer\n\n");
+        }
 
-    // Input lower and upper limit from user
-    printf("Enter lower limit: ");
-    scanf("%d", &lowerLimit);
-    printf("Enter upper limit: ");
-    scanf("%d", &upperLimit);
+        else {
+            num *= 10;
+            num += string1[i] - '0';
 
-    printf("Even/odd Numbers from %d to %d are: ", lowerLimit, upperLimit);
-    printEvenOdd(lowerLimit, upperLimit);
+            //don't bother using a 'for' loop because recursion is already sort-of a for loop
 
-    return 0;
+            finalValue(&string1[i+1]);
+        }
+    }
+    return num;
 }
 
-
-/**
- * Recursive function to print even or odd numbers in a given range.
- */
-void printEvenOdd(int cur, int limit)
-{
-    if(cur > limit)
-        return;
-
-    printf("%d, ", cur);
-
-    // Recursively call to printEvenOdd to get next value
-    printEvenOdd(cur + 2, limit);
+int main(int argc, const char * argv[]) {
+    printf("string to integer conversion yields %i\n",(finalValue("1234")));
+    return 0;
 }
