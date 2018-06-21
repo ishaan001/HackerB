@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string>
 using namespace std;
+//balancing parenthesis using recursion
 int square=0;
 int curl=0;
 int curve=0;
