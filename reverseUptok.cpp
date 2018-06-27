@@ -102,7 +102,7 @@ int main(){
     int n,k;
     cin>>n>>k;
     Node* head=createLL(n);
-    printLL(head);
+   // printLL(head);
    /* cout<<"\n here is your list ";
     cout<<"\n enter the element uwant to del";
     cin>>n;
