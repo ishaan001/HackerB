@@ -49,13 +49,14 @@ int Height(TreeNode* root)
     return max(lf,hf)+1;
 
 }
-void levelPrint(TreeNode* root){
+void leftPrint(TreeNode* root){
     if (root == NULL) return;
     TreeNode* const Marker = NULL;
 
     queue<TreeNode*> q;
     q.push(root);
     q.push(Marker);
+    int flag=1;
 
 
     while(q.empty() == false){
@@ -64,16 +65,76 @@ void levelPrint(TreeNode* root){
         {
 
             cout<<endl;
+            flag=1;
             if(q.empty()==false)q.push(Marker);
+            continue;
         }
-        cout << cur->data << " ";
+        if(flag==1)cout << cur->data << " ";
+        flag=0;
         if (cur->left) q.push(cur->left);
         if (cur->right) q.push(cur->right);
     }
 
 
 }
-int diameter(TreeNode* root,int height);
+void levelPrint(TreeNode* root){
+    if (root == NULL) return;
+    TreeNode* const Marker = NULL;
+
+    queue<TreeNode*> q;
+    q.push(root);
+    q.push(Marker);
+    //int flag=1;
+
+
+    while(q.empty() == false){
+        TreeNode* cur = q.front(); q.pop();
+        if(cur==Marker)
+        {
+
+            cout<<endl;
+      //      flag=1;
+            if(q.empty()==false)q.push(Marker);
+            continue;
+        }
+        /*if(flag==1)*/cout << cur->data << " ";
+        //flag=0;
+        if (cur->left) q.push(cur->left);
+        if (cur->right) q.push(cur->right);
+    }
+
+
+}
+void rightPrint(TreeNode* root){
+    if (root == NULL) return;
+    TreeNode* const Marker = NULL;
+
+    queue<TreeNode*> q;
+    q.push(root);
+    q.push(Marker);
+    //int flag=1;
+    TreeNode* Temp=root;
+
+
+    while(q.empty() == false){
+        TreeNode* cur = q.front(); q.pop();
+        if(cur!=Marker)Temp=cur;
+        if(cur==Marker)
+        {
+            cout << Temp->data << " ";
+
+            cout<<endl;
+      //      flag=1;
+            if(q.empty()==false)q.push(Marker);
+            continue;
+        }
+        /*if(flag==1)*/
+        //flag=0;
+        if (cur->left) q.push(cur->left);
+        if (cur->right) q.push(cur->right);
+    }
+}
+/*int diameter(TreeNode* root,int height);
 {
     int lh=0;
     int rh=0;
@@ -81,13 +142,34 @@ int diameter(TreeNode* root,int height);
         int
         return 0;
 
-}
+}*/
+
+/*void lefView(TreeNode* root)
+{
+    TreeNode* leftMost=NULL;
+    TreeNode* cur=root;
+    while(cur)
+    {
+        leftMost=NULL;
+        if(cur->left)
+        {
+            leftMost=cur->left;
+            cout<<leftMost->data;
+        }
+        else if(cur->right)
+        {
+            leftMost->
+        }
+    }
+
+}*/
 
 int main(){
     TreeNode* root = createTree();
-//    printTree(root);
-    int a=Height(root);
+   // printTree(root);
+  //  int a=Height(root);
 
- //   cout<<"\n"<<a;
-  //  levelPrint(root);
+    cout<<"\n";
+    leftPrint(root);
+    rightPrint(root);
 }
