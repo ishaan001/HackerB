@@ -19,7 +19,7 @@ void clearBoard(char Board[][100],int N ,int M){
 		for (int c = 0 ;c < M ; ++c)
 		{
 			/* code */
-			Board[r][c]='X';
+			Board[r][c]='l';
 		}
 	}
 }
@@ -30,8 +30,8 @@ bool canPlace(char Board[][100],int N, int r,int c){
 		/* code */
 		if(Board[x][c] == 'Q') return false;
 	}
-	int rowDir[]={-1,1};
-	int colDir[]={-1,1};
+	int rowDir[]={-1,-1};
+	int colDir[]={-1,+1};
 	for(int dir = 0 ; dir < 2 ; dir++){
 		for(int dist = 1 ; dist < N ; dist++ ){
 			int nextRow = r + dist * rowDir[dir];
@@ -60,7 +60,7 @@ bool solveNQueen(char Board[][100],int N,int r){
 				return true;
 			}
 			else{
-				Board[r][c]='X';
+				Board[r][c]='l';
 			}
 		}
 	}
