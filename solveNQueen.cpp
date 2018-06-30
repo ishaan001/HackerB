@@ -13,8 +13,24 @@ void output(char Board[][100] ,int m,int n){
 		cout<<endl;
 	}
 }
-void clearBoard(char Board[][100],int N ,int M){
+void output1(char Board[][100] ,int m,int n){
+	for (int i = 0; i < m; ++i)
+	{
+		/* code */
+		for (int j = 0; j < n; ++j)
+		{
+			/* code */
+			if(Board[i][j]=='Q')
+			{
 
+				cout<<"{"<<i<<"-"<<j<<"}"<<" ";
+			}
+		}
+		//cout<<endl;
+	}
+}
+void clearBoard(char Board[][100],int N ,int M){
+	cout<<endl;
 	for(int r = 0 ; r < N ; r++){
 		for (int c = 0 ;c < M ; ++c)
 		{
@@ -76,6 +92,7 @@ int main(){
 
 	if(success){
 		output(Board,N,N);
+		output1(Board,N,N);
 	}
 	else{
 		cout<<"sorry bro couldn't do neither could you :P "<<endl;
