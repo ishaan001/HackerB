@@ -1,175 +1,152 @@
 // Deepak Aggarwal, Coding Blocks
 // deepak@codingblocks.com
 #include <iostream>
-#include<queue>
+#include <queue>
 using namespace std;
 
-class TreeNode{
- public:
+class TreeNode {
+public:
     int data;
     TreeNode* left;
     TreeNode* right;
-    TreeNode(int d){
+    TreeNode* next;
+    TreeNode(int d) {
         data = d;
-        left=NULL;
-        right=NULL;
+        left = NULL;
+        right = NULL;
+        next = NULL;
     }
 };
 
-TreeNode* createTree(){
+TreeNode* createTree() {
     int x; cin >> x;
-    if (x == -1){
+    if (x == -1) {
         return NULL;
     }
 
     TreeNode* root = new TreeNode(x);
+    // cout << "Enter left child of " << x << " ";
     root->left = createTree();
+    // cout << "Enter right child of " << x << " ";
     root->right = createTree();
     return root;
 }
-void printTree(TreeNode *root)
-{
-    if(root==NULL){
 
-        return;
-    }
-    printTree(root->left);
-    cout<<root->data<<" ";
-    printTree(root->right);
-
-}
-int Height(TreeNode* root)
-{
-    if(root==NULL)
-    {
-        return 0 ;
-    }
-    int lf=Height(root->left);
-    int hf=Height(root->right);
-    return max(lf,hf)+1;
-
-}
-void leftPrint(TreeNode* root){
+void levelPrint(TreeNode* root) {
     if (root == NULL) return;
-    TreeNode* const Marker = NULL;
+    TreeNode* const MARKER = NULL;
 
     queue<TreeNode*> q;
     q.push(root);
-    q.push(Marker);
-    int flag=1;
+    q.push(MARKER);
 
-
-    while(q.empty() == false){
+    while (q.empty() == false) {
         TreeNode* cur = q.front(); q.pop();
-        if(cur==Marker)
-        {
-
-            cout<<endl;
-            flag=1;
-            if(q.empty()==false)q.push(Marker);
+        if (cur == MARKER) {
+            // cur level is processed....all children of this level are processed
+            // this signfies next level has ended
+            cout << endl;
+            if (q.empty() == false) q.push(MARKER);
             continue;
         }
-        if(flag==1)cout << cur->data << " ";
-        flag=0;
-        if (cur->left) q.push(cur->left);
-        if (cur->right) q.push(cur->right);
-    }
 
-
-}
-void levelPrint(TreeNode* root){
-    if (root == NULL) return;
-    TreeNode* const Marker = NULL;
-
-    queue<TreeNode*> q;
-    q.push(root);
-    q.push(Marker);
-    //int flag=1;
-
-
-    while(q.empty() == false){
-        TreeNode* cur = q.front(); q.pop();
-        if(cur==Marker)
-        {
-
-            cout<<endl;
-      //      flag=1;
-            if(q.empty()==false)q.push(Marker);
-            continue;
-        }
-        /*if(flag==1)*/cout << cur->data << " ";
-        //flag=0;
-        if (cur->left) q.push(cur->left);
-        if (cur->right) q.push(cur->right);
-    }
-
-
-}
-void rightPrint(TreeNode* root){
-    if (root == NULL) return;
-    TreeNode* const Marker = NULL;
-
-    queue<TreeNode*> q;
-    q.push(root);
-    q.push(Marker);
-    //int flag=1;
-    TreeNode* Temp=root;
-
-
-    while(q.empty() == false){
-        TreeNode* cur = q.front(); q.pop();
-        if(cur!=Marker)Temp=cur;
-        if(cur==Marker)
-        {
-            cout << Temp->data << " ";
-
-            cout<<endl;
-      //      flag=1;
-            if(q.empty()==false)q.push(Marker);
-            continue;
-        }
-        /*if(flag==1)*/
-        //flag=0;
+        cout << cur->data << "(" << (cur->next ? cur->next->data : 0) << ") ";
         if (cur->left) q.push(cur->left);
         if (cur->right) q.push(cur->right);
     }
 }
-/*int diameter(TreeNode* root,int height);
-{
-    int lh=0;
-    int rh=0;
-    if(root==NULL)
-        int
-        return 0;
 
-}*/
+TreeNode* getSuccessor(TreeNode* root, TreeNode* &successorParent) {
+    if (root == NULL) return root;
+    successorParent = root;
+    TreeNode* successor = root->right ? root->right : NULL;
+    while (successor && successor->left) {
+        successorParent = successor;
+        successor = successor->left;
+    }
+    return successor;
+}
 
-/*void lefView(TreeNode* root)
-{
-    TreeNode* leftMost=NULL;
-    TreeNode* cur=root;
-    while(cur)
-    {
-        leftMost=NULL;
-        if(cur->left)
-        {
-            leftMost=cur->left;
-            cout<<leftMost->data;
-        }
-        else if(cur->right)
-        {
-            leftMost->
-        }
+TreeNode* deleteFromBst(TreeNode* root, int key) {
+    if (root == NULL) return root;
+
+    if (key < root->data) {
+        root->left = deleteFromBst(root->left, key);
+        return root;
     }
 
-}*/
+    if (key > root->data) {
+        root->right = deleteFromBst(root->right, key);
+        return root;
+    }
 
-int main(){
+    if (key == root->data) {
+        // root has to be deleted
+        // if root has only left child
+        if (root->left == NULL) {
+            TreeNode* tmp = root->right;
+            delete root;
+            return tmp;
+        }
+
+        if (root->right == NULL) {
+            TreeNode* tmp = root->left;
+            delete root;
+            return tmp;
+        }
+
+        // root has 2 children
+        TreeNode* successorParent = NULL;
+        TreeNode* successor = getSuccessor(root, successorParent);
+        if (successorParent == root) {
+            successor->left = root->left;
+            delete root;
+            return successor;
+        }
+        else {
+            successorParent->left = successor->right;
+            successor->left = root->left;
+            successor->right = root->right;
+            delete root;
+            return successor;
+        }
+    }
+}
+
+
+TreeNode* lca = NULL;
+bool aPresent, bPresent;
+// USE PASS BY REFERENCE INSTEAD OF GLOBAL VARIABLES
+void findLcaBT(TreeNode* root, int a, int b) {
+    if (root == NULL) return;
+
+    findLcaBT(root->left, a, b);
+    if (aPresent && bPresent) return;   // lca was there in left subtree
+
+    if (root->data == a) aPresent = true;
+    if (root->data == b) bPresent = true;
+
+    bool maybe = false;
+    if (aPresent or bPresent) {
+        maybe = true;
+    }
+    
+    findLcaBT(root->right, a, b);
+
+    if (maybe && aPresent && bPresent) {lca = root; return;}
+}
+
+int main() {
+    // TreeNode* root = createTree();  // its a bst
+    // levelPrint(root);
+    // cout << "\n==============\n";
+    // int key; cin >> key;
+    // root = deleteFromBst(root, key);
+    // levelPrint(root);
+
+
     TreeNode* root = createTree();
-   // printTree(root);
-  //  int a=Height(root);
-
-    cout<<"\n";
-    leftPrint(root);
-    rightPrint(root);
+    int a, b; cin >> a >> b;
+    findLcaBT(root, a, b);
+    cout << lca << " " << (lca ? lca->data : -1);
 }
