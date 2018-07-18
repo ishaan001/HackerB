@@ -1,5 +1,3 @@
-// Deepak Aggarwal, Coding Blocks
-// deepak@codingblocks.com
 #include <iostream>
 #include <math.h> // cmath
 using namespace std;
@@ -11,14 +9,14 @@ void inputMat(int mat[][50], int m, int n){
     }
 }
 void outputMat(int mat[][50], int m, int n){
-    cout << "\n-----MAT Begins----\n";
+   // cout << "\n-----MAT Begins----\n";
     for(int r = 0; r < m; ++r){
         for(int c = 0; c < n; ++c){
             cout << mat[r][c] << " ";
         }
         cout << endl;
     }
-    cout << "-----MAT Ends------\n";
+    //cout << "-----MAT Ends------\n";
 }
 
 bool canPlace(int board[][50], int N, int r, int c, int num){

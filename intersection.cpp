@@ -6,7 +6,7 @@ using namespace std;
 
 void Printer(vector<int> vect)
 {
-    int n=vect.size();
+    int n=vect.size()-1;
     cout<<"[";
     for (int i=0; i<n-1; i++)
        cout << vect[i] << ",";
@@ -57,6 +57,7 @@ int main()
         cin>>a[i];
 
     }
+    cout<<endl;
      for(int i=0;i<n;i++)
     {
         cin>>b[i];

@@ -23,11 +23,16 @@ int ReducedToOne(int n){
 	}
 	return count;
 }
+int memo[10000];
+// this program is totally ineffecient as it consist o(3^n) complexity so we use the concept of memoization. 
 int reduceNo(int n)
 {
 	if(n == 1) return 0; 
 
+
 	int q1 = inf,q2 = inf,q3 = inf; //never declare variables always initialize them. 
+	
+	if(memo[n] != -1) return memo[n]
 	if(n % 3 == 0) q1 = 1 + reduceNo(n / 3);
 	if(n % 2 == 0) q2 = 1 + reduceNo(n / 2);
 	q3 = 1 + reduceNo(n - 1);

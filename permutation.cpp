@@ -7,7 +7,7 @@ int cnt = 0;
 void printPermutations(char arr[], int be){
     if (arr[be] == '\0'){
         ++cnt;
-        cout << cnt << " " <<  arr << endl;
+        cout <<  arr << endl;
         return;
     }
 
@@ -16,7 +16,7 @@ void printPermutations(char arr[], int be){
         swap(arr[i], arr[be]); // fix the ith element at the be
         printPermutations(arr, be + 1);
         // restore the changes
-        swap(arr[i], arr[   be]);
+        swap(arr[i], arr[be]);
     }
 }
 

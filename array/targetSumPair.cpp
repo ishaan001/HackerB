@@ -33,6 +33,13 @@ int main()
     /*cout << "Count of pairs is "
          << getPairsCount(arr, n, sum);
     */
+  sort(arr, arr+m);
+  for (int i = 0; i < m; ++i)
+  {
+      /* code */
+    cout<<arr[i]<<endl;
+
+  }
     getPairsCount(arr, m, sum);
     return 0;
 }

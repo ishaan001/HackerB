@@ -21,7 +21,7 @@ void outputMat(char mat[][100], int m, int n){
 }
 
 int connectedComponenets(char board[][100], int dim){
-
+    
 }
 
 int main(){

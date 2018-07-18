@@ -35,8 +35,8 @@ void PreOrderTree(Node* root)
             return;
         }
         cout<<root->data<<" ";
-        PreOrderTree(root->le
-          ght);
+        PreOrderTree(root->left);
+        PreOrderTree(root->right);
 }
 void InOrderTree(Node* root)
 {

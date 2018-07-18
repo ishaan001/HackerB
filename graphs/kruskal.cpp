@@ -1,159 +1,230 @@
-// C++ program for Kruskal's algorithm to find Minimum
-// Spanning Tree of a given connected, undirected and
-// weighted graph
-#include<bits/stdc++.h>
+// Deepak Aggarwal, Coding Blocks
+// deepak@codingblocks.com
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <queue>
+#include <algorithm>
 using namespace std;
- 
-// Creating shortcut for an integer pair
-typedef  pair<int, int> iPair;
- 
-// Structure to represent a graph
-struct Graph
-{
-    int V, E;
-    vector< pair<int, iPair> > edges;
- 
-    // Constructor
-    Graph(int V, int E)
-    {
-        this->V = V;
-        this->E = E;
+
+class Graph {
+public:
+    vector<vector<pair<int, int> > > adjList;
+    int sze;
+    int nVtx;
+    Graph(int numVtx) {
+        nVtx = numVtx;
+        sze = nVtx + 1;
+        adjList.resize(sze);
     }
- 
-    // Utility function to add an edge
-    void addEdge(int u, int v, int w)
-    {
-        edges.push_back({w, {u, v}});
+
+    void addEdge(int src, int dest, int wt) {
+        adjList[src].push_back(make_pair(dest, wt));
+        adjList[dest].push_back(make_pair(src, wt));
     }
- 
-    // Function to find MST using Kruskal's
-    // MST algorithm
-    int kruskalMST();
+
+    class Compare{
+    public:
+        bool operator()(const pair<int, int>& a, const pair<int, int>& b){
+            if (a.second < b.second) return false;
+            return true;
+        }
+    };
+    
+
+    vector<int> dijkstraForSssp(int src) {
+        // SSSP Single Source Shortest Path
+        priority_queue<pair<int, int>, vector<pair<int, int> >, Compare>  minHeap;
+        vector<int> dist(sze, 0);
+        vector<bool> visited(sze, false);
+
+        minHeap.push(make_pair(src, 0));
+
+        while (minHeap.empty() == false) {
+            pair<int, int> curVtxWt = minHeap.top(); minHeap.pop();
+            int curVtx = curVtxWt.first;
+            int distFrmSrc = curVtxWt.second;
+            if (visited[curVtx] == false) {
+                visited[curVtx] = true;
+                dist[curVtx] = distFrmSrc;
+            }
+            else {
+                continue;
+            }
+
+            const vector<pair<int, int> >& nbrList = adjList[curVtx];
+            // const auto& nbrList = adjList[curVtx];
+            for (int i = 0;  i < nbrList.size(); ++i) {
+                pair<int, int> curNbrWt = nbrList[i];
+                int curNbr = curNbrWt.first;
+                if (visited[curNbr] == true) continue;
+                int curWt = curNbrWt.second;
+                int distCurNbrFrmSrc = distFrmSrc + curWt;
+                minHeap.push(make_pair(curNbr, distCurNbrFrmSrc));
+            }
+        }
+        return dist;
+    }
+
+    void print() {
+        cout << "GRAPH BEGINS--------\n";
+        for (int curVtx = 1; curVtx < sze; ++curVtx) {
+            const vector<pair<int, int> >& nbrList = adjList[curVtx];
+            cout << curVtx << ": ";
+            for (int i = 0; i < nbrList.size(); ++i) {
+                pair<int, int> curNbr = nbrList[i];
+                cout << curNbr.first << "(" << curNbr.second << ") ";
+            }
+            cout << endl;
+        }
+        cout << "GRAPH ENDS--------\n";
+    }
 };
- 
-// To represent Disjoint Sets
-struct DisjointSets
-{
-    int *parent, *rnk;
-    int n;
- 
-    // Constructor.
-    DisjointSets(int n)
-    {
-        // Allocate memory
-        this->n = n;
-        parent = new int[n+1];
-        rnk = new int[n+1];
- 
-        // Initially, all vertices are in
-        // different sets and have rank 0.
-        for (int i = 0; i <= n; i++)
-        {
-            rnk[i] = 0;
- 
-            //every element is parent of itself
+
+
+class Edge{
+public:
+    int src, dest, wt;
+    Edge(int s, int d, int w){
+        src = s;
+        dest = d;
+        wt = w;
+    }
+};
+
+class UnionSet {
+    vector<int> parent;
+    vector<int> sze;
+
+    int root(int i) {
+        while (i != parent[i]) {
+            parent[i] = parent[parent[i]];
+            i = parent[i];
+        }
+        return i;
+    }
+
+public:
+    UnionSet(int n) {
+        int size = n + 1;
+        parent.resize(size);
+        for (int i = 0; i < size; ++i) {
             parent[i] = i;
         }
+        sze.resize(size, 1);
     }
- 
-    // Find the parent of a node 'u'
-    // Path Compression
-    int find(int u)
-    {
-        /* Make the parent of the nodes in the path
-           from u--> parent[u] point to parent[u] */
-        if (u != parent[u])
-            parent[u] = find(parent[u]);
-        return parent[u];
-    }
- 
-    // Union by rank
-    void merge(int x, int y)
-    {
-        x = find(x), y = find(y);
- 
-        /* Make tree with smaller height
-           a subtree of the other tree  */
-        if (rnk[x] > rnk[y])
-            parent[y] = x;
-        else // If rnk[x] <= rnk[y]
-            parent[x] = y;
- 
-        if (rnk[x] == rnk[y])
-            rnk[y]++;
-    }
-};
- 
- /* Functions returns weight of the MST*/
- 
-int Graph::kruskalMST()
-{
-    int mst_wt = 0; // Initialize result
- 
-    // Sort edges in increasing order on basis of cost
-    sort(edges.begin(), edges.end());
- 
-    // Create disjoint sets
-    DisjointSets ds(V);
- 
-    // Iterate through all sorted edges
-    vector< pair<int, iPair> >::iterator it;
-    for (it=edges.begin(); it!=edges.end(); it++)
-    {
-        int u = it->second.first;
-        int v = it->second.second;
- 
-        int set_u = ds.find(u);
-        int set_v = ds.find(v);
- 
-        // Check if the selected edge is creating
-        // a cycle or not (Cycle is created if u
-        // and v belong to same set)
-        if (set_u != set_v)
-        {
-            // Current edge will be in the MST
-            // so print it
-            cout << u << " - " << v << endl;
- 
-            // Update MST weight
-            mst_wt += it->first;
- 
-            // Merge two sets
-            ds.merge(set_u, set_v);
+
+    void setUnion(int x, int y) {
+        int rootX = root(x);
+        int rootY = root(y);
+        if (rootX == rootY) return;
+
+        if (sze[rootX] > sze[rootY]) {
+            sze[rootX] += sze[rootY];
+            parent[rootY] = rootX;
+        }
+        else {
+            sze[rootY] += sze[rootX];
+            parent[rootX] = rootY;
         }
     }
- 
-    return mst_wt;
+
+    bool isSameSet(int x, int y){
+        return root(x) == root(y);
+    }
+};
+
+
+bool compareEdges(const Edge& e1, const Edge& e2){
+    return e1.wt < e2.wt;
 }
- 
-// Driver program to test above functions
-int main()
-{
-    /* Let us create above shown weighted
-       and unidrected graph */
-    int V = 9, E = 14;
-    Graph g(V, E);
- 
-    //  making above shown graph
-    g.addEdge(0, 1, 4);
-    g.addEdge(0, 7, 8);
-    g.addEdge(1, 2, 8);
-    g.addEdge(1, 7, 11);
-    g.addEdge(2, 3, 7);
-    g.addEdge(2, 8, 2);
-    g.addEdge(2, 5, 4);
-    g.addEdge(3, 4, 9);
-    g.addEdge(3, 5, 14);
-    g.addEdge(4, 5, 10);
-    g.addEdge(5, 6, 2);
-    g.addEdge(6, 7, 1);
-    g.addEdge(6, 8, 6);
-    g.addEdge(7, 8, 7);
- 
-    cout << "Edges of MST are \n";
-    int mst_wt = g.kruskalMST();
- 
-    cout << "\nWeight of MST is " << mst_wt;
- 
-    return 0;
+
+int kruskalForMST(Graph& G){
+    vector<Edge> edges;
+    for(int curVtx = 1;  curVtx <= G.nVtx; ++curVtx){
+        auto& nbrList = G.adjList[curVtx];
+        for(int i = 0; i < nbrList.size(); ++i){
+            auto curNbr = nbrList[i];
+            Edge e(curVtx, curNbr.first, curNbr.second);
+            edges.push_back(e);
+        }
+    }
+
+    // kruskal Starts here
+    UnionSet edgeSet(G.nVtx);
+    sort(edges.begin(), edges.end(), compareEdges);
+    int cost = 0;
+    for(int i = 0; i < edges.size(); ++i){
+        Edge& curEdge = edges[i];
+        if (edgeSet.isSameSet(curEdge.src, curEdge.dest) == false){
+            // this edge is important
+            cost += curEdge.wt;
+            edgeSet.setUnion(curEdge.src, curEdge.dest);
+        }
+    }
+    return cost;
+}
+
+int primsforMST(Graph& G){
+
+    int src=1;
+    typedef pair<int, int> Edge;
+     priority_queue<pair<Edge, vector<Edge>, Compare>  minHeap;
+       // vector<int> dist(sze, 0);
+        vector<bool> visited(sze, false);
+
+        minHeap.push(make_pair(src, 0));
+        int cost = 0;
+
+         while (minHeap.empty() == false) {
+            Edge curEdge = minHeap.pop();
+            int curVtx = curEdge.first;
+            int curWt = curEdge.second;
+            if (visited[curVtx] == false) {
+                visited[curVtx] = true;
+                cost+ = curVtx;
+            }
+            else {
+                continue;
+            }
+
+            const vector<Edge>& nbrList = adjList[curVtx];
+            // const auto& nbrList = adjList[curVtx];
+            for (int i = 0;  i < nbrList.size(); ++i) {
+                const Edge& nbrEdge = nbrList[i];
+               // int curNbr = curNbrWt.first;
+                int nbrVtx = nbrEdge.first;
+                int NbrWt = nbrEdge.second;
+              //  if (visited[curNbr] == true) continue;
+             //   int curWt = curNbrWt.second;
+                int distCurNbrFrmSrc = distFrmSrc + curWt;
+                minHeap.push(make_pair(curNbr, distCurNbrFrmSrc));
+            }
+        }
+        return cost;
+
+
+}
+
+int main() {
+    int nVtx, nEdges;
+    cin >> nVtx >> nEdges;
+    Graph g(nVtx);
+
+    for (int i = 0; i < nEdges; ++i) {
+        int src, dest, wt;
+        cin >> src >> dest >> wt;
+        g.addEdge(src, dest, wt);
+    }
+
+    g.print();
+
+    // int src; cin >> src;
+    // auto ans = g.dijkstraForSssp(src);
+    // for(int i = 1; i < ans.size(); ++i){
+    //     cout << i << " " << ans[i] << endl;
+    // }
+
+    int ans = kruskalForMST(g);
+    cout << ans;
 }

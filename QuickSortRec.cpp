@@ -53,9 +53,9 @@ void quickSort(int arr[],int low,int high){
 }
 int main()
 {
-	int n;
+	/*int n;
 	cin>>n;
-	/*int *arr=new int[n];
+	*//*int *arr=new int[n];
 	for(int i=0;i<n;i++){
 		cin>>arr[i];
 	}*/
@@ -64,6 +64,6 @@ int main()
 	/*cout<<"before applying quick sort";
 	PrintArr(arr,5);
 	*/quickSort(arr,0,4);
-	cout<<"Hello";
+	//cout<<"Hello";
 	PrintArr(arr,5);
 }

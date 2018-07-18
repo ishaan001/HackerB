@@ -38,23 +38,29 @@ Node* createLL()
     }
     return head;
 }
-void deleteNode(Node* &head,int dataToDelete)
-{
-    Node* temp=head,*prev;
-    if(temp!=NULL && temp->data==dataToDelete)
-    {
-        temp=temp->next;
+Node* deleteNode(Node* head, int dataToDelete){
+    Node* cur = head;
+    Node* previous = NULL;
+    while(cur){
+        if (cur->data == dataToDelete){
+            // I have found a node to be deleted
+            if (previous == NULL){
+                // head is to be deleted
+                head = cur->next;
+                delete cur;
+            }
+            else {
+                previous->next = cur->next;
+                delete cur;
+            }
+            break;
+        }
+        else {
+            previous = cur;
+            cur = cur->next;
+        }
     }
-    while(temp!=NULL && temp->data!=dataToDelete)
-    {
-        prev=temp;
-        temp=temp->next;
-    }
-    if(temp==NULL) return;
-    prev->next=temp->next;
-
-    return;
-
+    return head;
 }
 void printLL(const Node* head)
 {
@@ -64,6 +70,20 @@ void printLL(const Node* head)
         cur=cur->next; //++cur
     }
 }
+void reverseLL(Node* head){
+    Node* prev=NULL;
+    Node* cur=head;
+    Node* ahead=NULL;
+    while(cur)
+    {
+        ahead=cur->next;
+        cur->next=prev;
+        prev=cur;
+        cur=ahead;
+    }
+    printLL(prev);
+}
+
 
 
 int main(){
@@ -76,4 +96,5 @@ int main(){
     deleteNode(head,n);
     //printLL(head);
     printLL(head);
+   // reverseLL(head);
 }
