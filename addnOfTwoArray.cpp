@@ -1,12 +1,23 @@
 #include<iostream>
+#include<string.h>
 using namespace std;
 int main()
-{
-    int m,n;
-    cin>>m>>n;
-    int *arr1,*arr2;
-    arr1=new int[m];
-    arr2=new int[n];
-
-
+{ 
+    
+	
+	string leftStr ;
+	char rightStr[] = "g f g";
+	
+	cin >> leftStr;
+	// Using strcmp()
+	int res = strcmp(leftStr == "y");
+	
+	if (res==0)
+		//printf("Strings are equal");
+		cout << " strings are equal";
+	else
+		//printf("Strings are unequal");
+		cout << "Strings are unequal";
+	cout << "\nValue returned by strcmp() is"<< res;
+	return 0;
 }
