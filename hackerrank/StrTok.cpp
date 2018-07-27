@@ -13,8 +13,9 @@ int main()
         v.push_back(token);
         token = std::strtok(NULL, " ");
     }
-    char input1[100] = "ishaan";
-    char *token1 = std::strtok(input1,"a");
+    string input1 = "ishaan";
+    //char c[100] = input1 ;
+    char *token1 = std::strtok(c,"a");
     while (token1 != NULL) {
         v1.push_back(token1);
         token1 = std::strtok(NULL, "a");

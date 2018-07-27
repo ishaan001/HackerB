@@ -10,8 +10,8 @@ int main()
 	
 	cin >> leftStr;
 	// Using strcmp()
-	int res = strcmp(leftStr == "y");
-	
+	if(leftStr == "y");
+		
 	if (res==0)
 		//printf("Strings are equal");
 		cout << " strings are equal";
