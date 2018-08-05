@@ -8,6 +8,9 @@ public:
 	int price;
 
 	char Name[20];
+	void start(){
+		cout << "GRrrrrrr....." << endl;
+	}
 };
 int main()
 {
@@ -17,7 +20,11 @@ int main()
 
 	c.model_No = 1198;
 	c.price = 250000;
-	c.Name = "aulto";
+	c.Name[0] = 'A';
+	c.Name[1] = 'U';
+	c.Name[2] = 'D';
+	c.Name[3] = 'I';
+	c.Name[4] = '\0';
 
-
+	c.start();
 }
