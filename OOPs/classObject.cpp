@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 
@@ -8,9 +9,19 @@ private :
 
 public:
 	int model_No;
-	
-
 	char Name[20];
+	
+	//constructor
+	Car(){
+		cout << "car is being made" << endl;
+	}
+	// Parameterized constructor
+	Car(int p, int mn, char *n){
+		price = p;
+		model_No = mn;
+		strcpy(Name,n);
+	}
+	
 	void start(){
 		cout << "GRrrrrrr....." << endl;
 	}
@@ -20,6 +31,12 @@ public:
 	int getPrice()
 	{
 		return price;
+	}
+	void print(){
+		cout << Name << endl;
+		cout << model_No << endl;
+		cout << price << endl;
+
 	}
 };
 int main()
@@ -39,6 +56,9 @@ int main()
 
 	c.start(); 
 	//cout << c.price << endl;
-	cout << c.getPrice() << endl;
+	cout << c.getPrice() << endl; 
 	cout << c.Name << endl;
+
+	Car E(17000, 12005, "ferrari");
+	E.print();
 }
