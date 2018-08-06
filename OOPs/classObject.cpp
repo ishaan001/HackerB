@@ -17,6 +17,10 @@ public:
 	void setPrice(int p){
 		price = p;
 	}
+	int getPrice()
+	{
+		return price;
+	}
 };
 int main()
 {
@@ -35,5 +39,6 @@ int main()
 
 	c.start(); 
 	//cout << c.price << endl;
+	cout << c.getPrice() << endl;
 	cout << c.Name << endl;
 }
