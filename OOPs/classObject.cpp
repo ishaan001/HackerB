@@ -9,28 +9,43 @@ private :
 
 public:
 	int model_No;
-	char Name[20];
-	
+	char *Name;
+
 	//constructor
 	Car(){
+		Name = NULL;
 		cout << "car is being made" << endl;
 	}
 	// Parameterized constructor
 	Car(int p, int mn, char *n){
 		price = p;
 		model_No = mn;
+		int len = strlen(n);
+		Name = new char[len+1];
 		strcpy(Name,n);
 	}
 	//copy constructor it also exist by default
 	Car(Car &x)
 	{
+        int len = strlen(x.Name);
+        Name = new char[len+1];
 		strcpy(Name, x.Name);
 		price =x.price;
 		model_No = x.model_No;
 	}
-	
+
 	void start(){
 		cout << "GRrrrrrr....." << endl;
+	}
+	void setName(char *n){
+		if(Name == NULL){
+			Name = new char[strlen(n)+1];
+			strcpy(Name, n);
+		}
+		else{
+			//later
+		}
+
 	}
 	void setPrice(int p){
 		price = p;
@@ -43,32 +58,28 @@ public:
 		cout << Name << endl;
 		cout << model_No << endl;
 		cout << price << endl;
+		cout << endl;
 
 	}
 };
 int main()
 {
 	Car c;
-	cout << sizeof(c) << endl;
+	/*cout << sizeof(c) << endl;
 	cout << sizeof(Car) << endl;
-
+    */
 	c.model_No = 1198;
 //	c.price = 250000; this can't be done as price is the private datamember
 	c.setPrice(25000);
-	c.Name[0] = 'A';
-	c.Name[1] = 'U';
-	c.Name[2] = 'D';
-	c.Name[3] = 'I';
-	c.Name[4] = '\0';
+	c.setName("Nano");
+	c.print();
+	//concept of deep copy and shallow copy
 
-	c.start(); 
-	//cout << c.price << endl;
-	/*cout << c.getPrice() << endl; 
-	cout << c.Name << endl;*/
+	Car D(100,200,"BMW");
+   // D.print();
 
-	Car E(17000, 12005, "ferrari");
+	Car E(D);
+    E.Name[0] = 'G'; //this has created a shallow copy since we have used ptr to an array so both
 	E.print();
-
-	Car f(E); //car f = c;
-	f.print();
+	D.print();
 }
