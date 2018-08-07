@@ -21,6 +21,13 @@ public:
 		model_No = mn;
 		strcpy(Name,n);
 	}
+	//copy constructor it also exist by default
+	/*Car(Car x)
+	{
+		Name = x.Name;
+		price =x.price;
+		model_No = x.model_No;
+	}*/
 	
 	void start(){
 		cout << "GRrrrrrr....." << endl;
@@ -61,4 +68,7 @@ int main()
 
 	Car E(17000, 12005, "ferrari");
 	E.print();
+
+	Car f(c);
+	f.print();
 }
