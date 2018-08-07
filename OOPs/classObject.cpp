@@ -89,7 +89,11 @@ int main()
    // D.print();
 
 	Car E(D);
-    E.Name[0] = 'G'; //this has created a shallow copy since we have used ptr to an array so both
+   /* E.Name[0] = 'G'; //this has created a shallow copy since we have used ptr to an array so both
 	E.print();
 	D.print();
+	*/
+	Car F = E ;
+	E.print();
+	F.print();
 }
