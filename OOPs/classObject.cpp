@@ -22,12 +22,12 @@ public:
 		strcpy(Name,n);
 	}
 	//copy constructor it also exist by default
-	/*Car(Car x)
+	Car(Car &x)
 	{
-		Name = x.Name;
+		strcpy(Name, x.Name);
 		price =x.price;
 		model_No = x.model_No;
-	}*/
+	}
 	
 	void start(){
 		cout << "GRrrrrrr....." << endl;
@@ -63,12 +63,12 @@ int main()
 
 	c.start(); 
 	//cout << c.price << endl;
-	cout << c.getPrice() << endl; 
-	cout << c.Name << endl;
+	/*cout << c.getPrice() << endl; 
+	cout << c.Name << endl;*/
 
 	Car E(17000, 12005, "ferrari");
 	E.print();
 
-	Car f(c);
+	Car f(E); //car f = c;
 	f.print();
 }
