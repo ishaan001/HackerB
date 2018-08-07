@@ -71,6 +71,13 @@ public:
 		cout << endl;
 
 	}
+	~Car(){
+        cout << "Car is being destroyed " << Name <<endl;
+        // delete all the data member which are presnt int the heap for example *name
+        if(Name != NULL){
+            delete [] Name;
+        }
+	}
 };
 int main()
 {
@@ -79,7 +86,7 @@ int main()
 	cout << sizeof(Car) << endl;
     */
 	c.model_No = 1198;
-//	c.price = 250000; this can't be done as price is the private datamember
+//	c.price = 250000; this can't be done as price is the private data member
 	c.setPrice(25000);
 	c.setName("Nano");
 	c.print();
@@ -96,4 +103,8 @@ int main()
 	Car F = E ;
 	E.print();
 	F.print();
+
+	Car *g = new Car(500,600,"Tesla");
+    delete g;
+	return 0;
 }
