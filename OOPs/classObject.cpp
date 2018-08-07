@@ -25,7 +25,17 @@ public:
 		strcpy(Name,n);
 	}
 	//copy constructor it also exist by default
+	//deep copy constructor is created
 	Car(Car &x)
+	{
+        int len = strlen(x.Name);
+        Name = new char[len+1];
+		strcpy(Name, x.Name);
+		price =x.price;
+		model_No = x.model_No;
+	}
+
+	void operator = (Car &x)
 	{
         int len = strlen(x.Name);
         Name = new char[len+1];
