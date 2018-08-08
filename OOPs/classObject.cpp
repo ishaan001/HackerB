@@ -79,6 +79,15 @@ public:
         }
 	}
 };
+class Fruit{
+    public:
+        int j,n;
+        Fruit(){
+        j = 0;
+        n = 0;
+
+        }
+};
 int main()
 {
 	Car c;
@@ -106,5 +115,7 @@ int main()
 
 	Car *g = new Car(500,600,"Tesla");
     delete g;
+    Fruit f;
+    cout <<f.j << " " << f.n<< endl;
 	return 0;
 }
