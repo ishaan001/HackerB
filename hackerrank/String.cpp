@@ -14,5 +14,8 @@ while(token != mystring){
 }
 cout << token <<endl;
 cout << mystring;
-cout << mystring.split(">=");
+//cout << mystring.split(">=");
+
+
+
 }
