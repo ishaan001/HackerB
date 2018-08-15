@@ -1,3 +1,13 @@
+/*input - 78 min sal
+          4  no of input
+          bob 98
+          madhav 75
+          jonny 86
+          alice 86
+
+ output - bob 98
+          alice 86  is sal equal the sort lexiographic order
+          jonny 86*/
 #include<iostream>
 #include<algorithm>
 #include<cstring>
