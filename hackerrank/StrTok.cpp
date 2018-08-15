@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <bits/stdc++.h>
 using namespace std;
- 
-int main() 
+
+int main()
 {
 	vector<string> v,v1;
     char input[100] = "A bird came down the walk";
@@ -14,7 +14,7 @@ int main()
         token = std::strtok(NULL, " ");
     }
     string input1 = "ishaan";
-    //char c[100] = input1 ;
+    char c[100] ;
     char *token1 = std::strtok(c,"a");
     while (token1 != NULL) {
         v1.push_back(token1);
