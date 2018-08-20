@@ -166,6 +166,24 @@ bool searchIterative(Node *head, int key){
 
 }
 
+// reversing a linked list 
+void reverseLinkedList(Node *&head){
+	Node * CurrentLL = head;
+	Node * prevLL = NULL;
+	Node * NextLL;
+	while(CurrentLL != NULL){
+		//save then next node
+		NextLL = CurrentLL -> next;
+		// make the current node point to the previous node that is basically reversing
+		CurrentLL -> next = prevLL;
+		// just update the previous and the current
+		prevLL = CurrentLL;
+		CurrentLL = NextLL; 
+	}
+	head = prevLL;
+
+}
+
 int main()
 {
 	Node *head =NULL;
@@ -199,5 +217,8 @@ int main()
 	}else{
 		cout << "it doesn't ";
 	}
+	cout << endl;
+	reverseLinkedList(head);
+	printList(head);
 	return 0;
 }
