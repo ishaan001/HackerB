@@ -142,6 +142,30 @@ void deleteAtMiddle(Node*& head, int p){
 
 }
 
+// search an element recursively
+bool searchRecursive(Node *head, int key){
+	if(head == NULL){
+		return false;
+	}
+	if(head -> data == key){
+		return true;
+	}
+	else{
+		return searchRecursive( head->next, key);
+	}
+}
+bool searchIterative(Node *head, int key){
+	while(head != NULL){
+		if(head->data == key){
+			return true;
+		}
+		head =head->next;
+
+	}
+	return false;
+
+}
+
 int main()
 {
 	Node *head =NULL;
@@ -166,5 +190,14 @@ int main()
 	cout <<endl;
 	deleteAtMiddle(head, 2);
 	printList(head);
+	cout << endl;
+	bool find = searchRecursive(head, 4);
+	if (find)
+	{
+		/* code */
+		cout << "element exist";
+	}else{
+		cout << "it doesn't ";
+	}
 	return 0;
 }
