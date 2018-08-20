@@ -13,7 +13,7 @@ public:
 	}
 
 };
-//class approach to make the node 
+//class approach to make the node
 /*class LinkedList
 {
 	Node *head = NULL;
@@ -28,6 +28,7 @@ void insertAtHead (Node *&head, int data){
 	Node * n = new Node(data);
 	n -> next = head;
 	head = n;
+	return;
 }
 void insertAtEnd (Node *&head, int data){
 	if(head == NULL){
@@ -48,7 +49,7 @@ int length(Node* head){
 	while(head != NULL ){
 //		cout << ptr -> data << " -> " ;
 		head = head->next;
-		len += 1; 
+		len += 1;
 	}
 	return len;
 }
@@ -85,16 +86,85 @@ void printList (Node *head){
 	}
 
 }
+void deleteAtHead(Node*&head){
+	if(head == NULL){
+		return;
+	}
+	Node * temp = head;
+	head = head -> next;
+	delete temp;
+	return;
+}
+
+void deleteAtEnd(Node*&head){
+	if(head == NULL){
+		return;
+	}
+	else if(head -> next == NULL){
+		Node * temp = head;
+		head = NULL;
+		delete temp;
+	}
+	else{
+		Node * temp = head;
+		Node * prev = NULL;
+		while (temp -> next != NULL){
+			prev = temp;
+			temp = temp ->next;
+		}
+
+		delete temp;
+		prev -> next =NULL;
+	}
+	return;
+}
+
+void deleteAtMiddle(Node*& head, int p){
+	if(p==0){
+		deleteAtHead(head);
+	}
+	else if(p > length(head)){
+		deleteAtEnd(head);
+	}
+	else{
+		int count = 1;
+		Node *temp = head;
+		Node *prev = NULL;
+		while (count != p){
+			prev = temp;
+			temp = temp -> next;
+			count++;
+		}
+		prev -> next = temp ->next;
+		delete temp;
+		return;
+	}
+
+}
 
 int main()
 {
 	Node *head =NULL;
 	insertAtHead(head, 5);
+	insertAtHead(head, 7);
 	insertAtHead(head, 4);
+	insertAtHead(head, 3);
+	insertAtHead(head, 2);
+	insertAtHead(head, 1);
+
 	//printList(head);
 	insertAtEnd(head, 6);
 	//printList(head);
-	insertAtMiddle(head, 2, 1);
+	insertAtMiddle(head, 8, 3);
+	printList(head);
+	deleteAtHead(head);
+	cout << endl;
+	printList(head);
+	cout << endl;
+	deleteAtEnd(head);
+	printList(head);
+	cout <<endl;
+	deleteAtMiddle(head, 2);
 	printList(head);
 	return 0;
 }
