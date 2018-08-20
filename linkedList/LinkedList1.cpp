@@ -184,6 +184,18 @@ void reverseLinkedList(Node *&head){
 
 }
 
+Node* reverseLinkedListRecursion(Node *head){
+	//base case
+	if(head -> next == NULL || head ==NULL){
+		return head;
+	}
+	Node * smallhead = reverseLinkedListRecursion(head -> next);
+	Node * C = head;
+	C -> next -> next = C;
+	C -> next = NULL;
+	return smallhead;
+}
+
 int main()
 {
 	Node *head =NULL;
@@ -219,6 +231,9 @@ int main()
 	}
 	cout << endl;
 	reverseLinkedList(head);
+	printList(head);
+	cout << endl;
+	head = reverseLinkedListRecursion(head);
 	printList(head);
 	return 0;
 }
