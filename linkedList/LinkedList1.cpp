@@ -186,7 +186,7 @@ void reverseLinkedList(Node *&head){
 
 Node* reverseLinkedListRecursion(Node *head){
 	//base case
-	if(head -> next == NULL || head ==NULL){
+	if(head -> next == NULL || head == NULL){
 		return head;
 	}
 	Node * smallhead = reverseLinkedListRecursion(head -> next);
@@ -196,10 +196,28 @@ Node* reverseLinkedListRecursion(Node *head){
 	return smallhead;
 }
 
+void constructLL(Node *&head){
+	int data;
+	cin >> data;
+	while(data != -1){
+		insertAtEnd(head, data);
+		cin >> data;
+	}
+}
+
+//runner test technique
+void findKthNode(Node *head, int k){
+	Node * faster;
+	Node * slower = head;
+	while (k != 0;)
+}
+
 int main()
 {
 	Node *head =NULL;
-	insertAtHead(head, 5);
+	constructLL(head);
+	printList(head);
+	/*insertAtHead(head, 5);
 	insertAtHead(head, 7);
 	insertAtHead(head, 4);
 	insertAtHead(head, 3);
@@ -224,7 +242,6 @@ int main()
 	bool find = searchRecursive(head, 4);
 	if (find)
 	{
-		/* code */
 		cout << "element exist";
 	}else{
 		cout << "it doesn't ";
@@ -234,6 +251,8 @@ int main()
 	printList(head);
 	cout << endl;
 	head = reverseLinkedListRecursion(head);
-	printList(head);
+	printList(head);*/
 	return 0;
 }
+
+
