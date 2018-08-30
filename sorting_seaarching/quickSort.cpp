@@ -18,7 +18,7 @@ void swap(int* a, int* b)
    of pivot */
 int partition (int arr[], int low, int high)
 {
-    int pivot = arr[high];    // pivot
+    int pivot = arr[high];    // pivot last element of the array
     int i = (low - 1);  // Index of smaller element
  
     for (int j = low; j <= high- 1; j++)
