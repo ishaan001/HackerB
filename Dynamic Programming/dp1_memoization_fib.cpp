@@ -29,7 +29,3 @@ int main(){
 	cout<<n<<"th fib no is :"<<ans;
 
 }
-
-
-
-plans - ""
